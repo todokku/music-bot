@@ -7,6 +7,9 @@
     "test": "xo",
     "xo:fix": "xo --fix"
   },
+  "engines": {
+    "node": ">=8"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/addict67/music-bot.git"
@@ -16,9 +19,16 @@
     "music",
     "bot",
     "youtube",
-    "discordjs"
+    "discordjs",
+    "simple",
+    "xo",
+    "ffmpeg"
   ],
-  "author": "Chris Jungen",
+  "author": {
+    "name": "Chris Jungen",
+    "email": "contact@chrisjungen.fr",
+    "url": "https://chrisjungen.fr"
+  },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/addict67/music-bot/issues"
