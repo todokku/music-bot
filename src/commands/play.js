@@ -47,6 +47,7 @@ const play = {
 		const song = {
 			title: songInfo.title,
 			url: songInfo.video_url,
+			author: songInfo.author.name,
 			thumbnailUrl: songInfo.player_response.videoDetails.thumbnail.thumbnails.pop().url,
 			duration: new Date(songInfo.length_seconds * 1000).toISOString().slice(11, 19)
 		};

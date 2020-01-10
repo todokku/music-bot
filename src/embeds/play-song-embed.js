@@ -14,6 +14,7 @@ class PlaySongEmbed extends DefaultEmbed {
 
 		this.setTitle(':notes: Now playing');
 		this.addField('Title', `\`${song.title}\``);
+		this.addField('Author', `\`${song.author}\``);
 		this.addField('Duration', `\`${song.duration}\``);
 		this.addField('Link', song.url);
 		this.setImage(song.thumbnailUrl);
