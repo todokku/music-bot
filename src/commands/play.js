@@ -6,9 +6,10 @@
 const ytdl = require('ytdl-core');
 const {YouTube} = require('better-youtube-api');
 
-const PlaySongEmbed = require('../embeds/play-song-embed');
 const AddSongEmbed = require('../embeds/add-song-embed');
 const ErrorEmbed = require('../embeds/error-embed');
+
+const playSong = require('../audio/play-song');
 
 /**
  * Play command.
@@ -35,8 +36,7 @@ const play = {
 			songInfo = await ytdl.getInfo(arg);
 		} else {
 			const infos = await youtube.searchVideos(arg, 1);
-			const videoUrl = infos.results[0].url;
-			songInfo = await ytdl.getInfo(videoUrl);
+			songInfo = await ytdl.getInfo(infos.results[0].url);
 		}
 
 		if (!songInfo) {
@@ -67,7 +67,7 @@ const play = {
 
 			try {
 				newQueue.connection = await voiceChannel.join();
-				this.play(message, newQueue, musicBot.queue);
+				playSong(message, newQueue, musicBot.queue);
 			} catch (error) {
 				console.log(error);
 				musicBot.queue.delete(message.guild.id);
@@ -77,34 +77,6 @@ const play = {
 			serverQueue.songs.push(song);
 			return message.channel.send(new AddSongEmbed(song));
 		}
-	},
-	play(message, serverQueue, queue) {
-		const song = serverQueue.songs[0];
-
-		if (!song) {
-			serverQueue.voiceChannel.leave();
-			queue.delete(message.guild.id);
-			return;
-		}
-
-		const dispatcher = serverQueue.connection.playStream(ytdl(song.url, {
-			filter: 'audioonly',
-			quality: 'highestaudio',
-			highWaterMark: 1 << 25
-		}))
-			.on('start', () => {
-				console.log('Music started!');
-				message.channel.send(new PlaySongEmbed(song));
-			})
-			.on('end', () => {
-				console.log('Music ended!');
-				serverQueue.songs.shift();
-				this.play(message, serverQueue, queue);
-			})
-			.on('error', error => {
-				console.error(error);
-			});
-		dispatcher.setVolumeLogarithmic(serverQueue.volume);
 	}
 };
 
