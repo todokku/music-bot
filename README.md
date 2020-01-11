@@ -23,22 +23,20 @@ _Make sure you have the latest version of FFMPEG installed localy!_
 
 ## Quick Start
 
-MusicBot is a class, the constructor takes an object which needs:
+MusicBot's constructor takes an object with these properties:
 
 - `discordToken`: Your Discord bot token. **Required to run**
 - `googleKey`: Your Google API key. **Required to run**
-- `prefix`: Your commands prefix. Default is `!!`
+- `prefix`: Your commands prefix. **Default is `!!`**
 
 ```javascript
 const MusicBot = require('@addict67/music-bot');
 
 const musicBot = new MusicBot({
   discordToken: 'xxx',
-  googleKey: 'xxx',
-  prefix: '!'
+  googleKey: 'xxx'
 });
 
-// Start the bot
 musicBot.start();
 ```
 
